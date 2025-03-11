@@ -16,10 +16,9 @@ namespace ToDoList_WinForms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            
             string newItem = richTextBox1.Text;
             checkedListBox1.Items.Add(newItem);
-            originalItems[checkedListBox1.Items.Count - 1] = newItem; // Zapisanie oryginalnego tekstu
+            originalItems.Add(checkedListBox1.Items.Count - 1, newItem); // Zapisanie oryginalnego tekstu
             Refresh();
         }
 
