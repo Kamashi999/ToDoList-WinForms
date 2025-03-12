@@ -40,125 +40,31 @@ namespace ToDoList_WinForms
             label8.Hide();
             checkedListBox2.Hide();
         }
-        void InsertInfoCats()
+
+        void InsertInfo(string category)
         {
             if (Int32.TryParse(textBox3.Text, out int age) && textBox2.Text != null && textBox4.Text != null && textBox5.Text != null && richTextBox1.Text != null)
             {
-                Cat cat = new Cat(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
-                string newItemCats = cat.ShowAnimalInfo();
-                checkedListBox2.Items.Add(newItemCats);
-                originalItemsCats.Add(checkedListBox2.Items.Count - 1, newItemCats); // Zapisanie oryginalnego tekstu
-                Refresh();
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid number or fill all text!");
-            }
-        }
-        void InsertInfoDogs()
-        {
-            if (Int32.TryParse(textBox3.Text, out int age) && textBox2.Text != null && textBox4.Text != null && textBox5.Text != null && richTextBox1.Text != null)
-            {
+                if (category == "cat") 
+                {
+                    Cat cat = new Cat(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
+                    string newItemCats = cat.ShowAnimalInfo();
+                    checkedListBox2.Items.Add(newItemCats);
+                    originalItemsCats.Add(checkedListBox2.Items.Count - 1, newItemCats); // Zapisanie oryginalnego tekstu
+                    Refresh();
+                } 
+                else if(category == "dog") 
+                { 
                 Dog dog = new Dog(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
                 string newItem = dog.ShowAnimalInfo();
                 checkedListBox1.Items.Add(newItem);
                 originalItems.Add(checkedListBox1.Items.Count - 1, newItem); // Zapisanie oryginalnego tekstu
                 Refresh();
+                }
             }
             else
             {
                 MessageBox.Show("Please enter a valid number or fill all text!");
-            }
-        }
-
-        void InsertInfoDogs4()
-        {
-            if (Int32.TryParse(textBox3.Text, out int age) && textBox2.Text != null && textBox4.Text != null && textBox5.Text != null && richTextBox1.Text != null)
-            {
-                Dog dog = new Dog(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
-                string newItem = dog.ShowAnimalInfo();
-                checkedListBox1.Items.Add(newItem);
-                originalItems.Add(checkedListBox1.Items.Count - 1, newItem); // Zapisanie oryginalnego tekstu
-                Refresh();
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid number or fill all text!");
-            }
-        }
-
-        //void RefreshItems(string category, CheckedListBox checkedListBox, Dictionary<int, string> originalItems)
-        //{
-        //    for (int i = 0; i < checkedListBox.Items.Count; i++)
-        //    {
-        //        if (checkedListBox.GetItemChecked(i)) // Sprawdzamy, czy element jest zaznaczony
-        //        {
-        //            // Zapobiega wielokrotnemu dodawaniu znaku "✔️"
-        //            if (!checkedListBox.Items[i].ToString().Contains("✔️"))
-        //            {
-        //                // Dodajemy ✔️ oraz datę do elementu
-        //                checkedListBox.Items[i] = originalItems[i] + " ✔️ " + DateTime.Now;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            // Przywracamy oryginalny tekst, jeśli element nie jest zaznaczony
-        //            if (originalItems.ContainsKey(i))
-        //            {
-        //                checkedListBox.Items[i] = originalItems[i];
-        //            }
-        //        }
-        //    }
-        //}
-
-
-        //void RefreshCats()
-        //{
-        //    for (int i = 0; i < checkedListBox2.Items.Count; i++)
-        //    {
-        //        if (checkedListBox2.GetItemChecked(i))
-        //        {
-        //            if (!checkedListBox2.Items[i].ToString().Contains("✔️")) // Zapobiega wielokrotnemu dodawaniu
-        //            {
-        //                checkedListBox2.Items[i] = originalItemsCats[i] + " ✔️ " + DateTime.Now;
-        //            }
-        //            else
-        //            {
-
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (originalItemsCats.ContainsKey(i))
-        //            {
-        //                checkedListBox2.Items[i] = originalItemsCats[i]; // Przywracanie oryginalnego tekstu
-        //            }
-        //        }
-        //    }
-        //}
-
-        void RefreshDogs()
-        {
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
-            {
-                if (checkedListBox1.GetItemChecked(i))
-                {
-                    if (!checkedListBox1.Items[i].ToString().Contains("✔️")) // Zapobiega wielokrotnemu dodawaniu
-                    {
-                        checkedListBox1.Items[i] = originalItems[i] + " ✔️ " + DateTime.Now;
-                    }
-                    else
-                    {
-
-                    }
-                }
-                else
-                {
-                    if (originalItems.ContainsKey(i))
-                    {
-                        checkedListBox1.Items[i] = originalItems[i]; // Przywracanie oryginalnego tekstu
-                    }
-                }
             }
         }
 
@@ -205,85 +111,10 @@ namespace ToDoList_WinForms
             }
         }
 
-        //void DeleteItemCats()
-        //{
-        //    string deleteIndexString = textBox1.Text;
-        //    if (Int32.TryParse(deleteIndexString, out int index))
-        //    {
-        //        if (index > 0 && index < (checkedListBox2.Items.Count + 1))
-        //        {
-        //            checkedListBox2.Items.RemoveAt(index - 1);
-        //            originalItemsCats.Remove(index - 1);
-        //        }
-        //        else { MessageBox.Show("Please enter a valid number!"); }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please enter a valid number!");
-        //    }
-        //}
-
-        //void DeleteItemDogs()
-        //{
-        //    string deleteIndexString = textBox1.Text;
-        //    if (Int32.TryParse(deleteIndexString, out int index))
-        //    {
-        //        if (index > 0 && index < (checkedListBox1.Items.Count + 1))
-        //        {
-        //            checkedListBox1.Items.RemoveAt(index - 1);
-        //            originalItems.Remove(index - 1);
-        //        }
-        //        else { MessageBox.Show("Please enter a valid number!"); }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please enter a valid number!");
-        //    }
-        //}
-
         void Exit()
         {
             Application.Exit();
         }
-
-        //void SaveCats()
-        //{
-        //    SaveFileDialog saveFileDialog = new SaveFileDialog
-        //    {
-        //        Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*",
-        //        Title = "Zapisz plik"
-        //    };
-
-        //    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string filePath = saveFileDialog.FileName;
-
-        //        List<string> lines = new List<string>();
-
-        //        foreach (var item in checkedListBox2.Items)
-        //        {
-        //            // Sprawdź, czy element jest zaznaczony
-        //            bool isChecked = checkedListBox2.GetItemChecked(checkedListBox2.Items.IndexOf(item));
-
-        //            // Jeśli element zawiera znak "✔️", pomin go w zapisie
-        //            if (!item.ToString().Contains("✔️"))
-        //            {
-        //                lines.Add($"{item}");  // Zapisz zadanie i jego status
-        //            }
-        //            else
-        //            {
-        //                string tempPath = "C:\\Users\\Sebastian\\Desktop\\Temp\\Temp.txt";
-        //                using (StreamWriter sw = new StreamWriter(tempPath, true))
-        //                {
-        //                    sw.WriteLine(item.ToString());
-        //                }
-        //            }
-        //        }
-
-        //        File.WriteAllLines(filePath, lines);
-        //    }
-        //}
-
         void Save(string category, CheckedListBox checklistbox)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog
@@ -360,29 +191,6 @@ namespace ToDoList_WinForms
             }
         }
 
-        //void OpenCats()
-        //{
-        //    OpenFileDialog openFileDialog = new OpenFileDialog
-        //    {
-        //        Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*",
-        //        Title = "Wybierz plik do otwarcia"
-        //    };
-
-        //    if (openFileDialog.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string filePath = openFileDialog.FileName;
-        //        string[] lines = File.ReadAllLines(filePath);
-
-        //        checkedListBox2.Items.Clear();
-        //        originalItemsCats.Clear();
-
-        //        for (int i = 0; i < lines.Length; i++)
-        //        {
-        //            checkedListBox2.Items.Add(lines[i]);
-        //            originalItemsCats[i] = lines[i]; // Aktualizacja słownika
-        //        }
-        //    }
-        //}
         void Open(string category, CheckedListBox checkedListBox, Dictionary<int, string> array)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -406,30 +214,6 @@ namespace ToDoList_WinForms
                 }
             }
         }
-        //void OpenDogs()
-        //{
-        //    OpenFileDialog openFileDialog = new OpenFileDialog
-        //    {
-        //        Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*",
-        //        Title = "Wybierz plik do otwarcia"
-        //    };
-
-        //    if (openFileDialog.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string filePath = openFileDialog.FileName;
-        //        string[] lines = File.ReadAllLines(filePath);
-
-        //        checkedListBox1.Items.Clear();
-        //        originalItems.Clear();
-
-        //        for (int i = 0; i < lines.Length; i++)
-        //        {
-        //            checkedListBox1.Items.Add(lines[i]);
-        //            originalItems[i] = lines[i]; // Aktualizacja słownika
-        //        }
-        //    }
-        //}
-
         void ChangeTheme()
         {
             if (changeTheme == true)
@@ -533,11 +317,11 @@ namespace ToDoList_WinForms
         {
             if (changeVisitors == true)
             {
-                InsertInfoDogs();
+                InsertInfo("dog");
             }
             else
             {
-                InsertInfoCats();
+                InsertInfo("cat");
             }
         }
 
@@ -557,7 +341,7 @@ namespace ToDoList_WinForms
         {
             if (changeVisitors == true)
             {
-                SaveDogs();
+                Save("dogs", checkedListBox1);
             }
             else
             {
@@ -582,7 +366,7 @@ namespace ToDoList_WinForms
             if (changeVisitors == true)
             {
                 MessageBox.Show("Have you saved files?");
-                Save("dogs", checkedListBox2);
+                Save("dogs", checkedListBox1);
                 Exit();
             }
             else
@@ -600,13 +384,13 @@ namespace ToDoList_WinForms
 
         private void Refresh(Object sender, EventArgs e)
         {
-            RefreshDogs();
+            Refresh("dogs", checkedListBox1, originalItems);
             Refresh("cats", checkedListBox2, originalItemsCats);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            RefreshDogs();
+            Refresh("dogs", checkedListBox1, originalItems);
             Refresh("cats", checkedListBox2, originalItemsCats);
         }
     }

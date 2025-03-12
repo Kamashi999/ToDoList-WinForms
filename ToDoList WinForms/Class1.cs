@@ -17,6 +17,7 @@ public abstract class Animal
 
     public Animal(string type, string name, int age, string ownername, string ownernumber, string issue)
     {
+        Type = type;
         Name = name;
         Age = age;
         OwnerName = ownername;
