@@ -28,7 +28,7 @@ namespace ToDoList_WinForms
             {
                 if (checkedListBox1.GetItemChecked(i))
                 {
-                    if (!checkedListBox1.Items[i].ToString().Contains("✔️")) // Zapobiega wielokrotnemu dodawaniu
+                    if (!checkedListBox1.Items[i].ToString().Contains("✔️" + DateTime.Now)) // Zapobiega wielokrotnemu dodawaniu
                     {
                         checkedListBox1.Items[i] = originalItems[i] + " ✔️ " + DateTime.Now;
                     }
@@ -39,14 +39,43 @@ namespace ToDoList_WinForms
                 }
             }
         }
-        private void btnCheck_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         private void checkedListBox1_Click(object sender, EventArgs e)
         {
             Refresh();
+        }
+
+        void DeleteItem()
+        {
+            string deleteIndexString = textBox1.Text;
+            if (Int32.TryParse(deleteIndexString, out int index))
+            {
+                if (index > 0 && index < (checkedListBox1.Items.Count + 1))
+                {
+                    checkedListBox1.Items.RemoveAt(index - 1);
+                    originalItems.Remove(index - 1);
+                }
+                else { MessageBox.Show("Please enter a valid number!"); }
+                }
+                else
+            {
+                MessageBox.Show("Please enter a valid number!");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DeleteItem();
+        }
+
+        void Exit()
+        {
+            Exit();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Exit();
         }
     }
 }
