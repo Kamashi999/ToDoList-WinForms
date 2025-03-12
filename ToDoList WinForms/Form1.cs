@@ -153,44 +153,6 @@ namespace ToDoList_WinForms
             }
         }
 
-        void SaveDogs()
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*",
-                Title = "Zapisz plik"
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = saveFileDialog.FileName;
-
-                List<string> lines = new List<string>();
-
-                foreach (var item in checkedListBox1.Items)
-                {
-                    // Sprawdź, czy element jest zaznaczony
-                    bool isChecked = checkedListBox1.GetItemChecked(checkedListBox1.Items.IndexOf(item));
-
-                    // Jeśli element zawiera znak "✔️", pomin go w zapisie
-                    if (!item.ToString().Contains("✔️"))
-                    {
-                        lines.Add($"{item}");  // Zapisz zadanie i jego status
-                    }
-                    else
-                    {
-                        string tempPath = "C:\\Users\\Sebastian\\Desktop\\Temp\\Temp.txt";
-                        using (StreamWriter sw = new StreamWriter(tempPath, true))
-                        {
-                            sw.WriteLine(item.ToString());
-                        }
-                    }
-                }
-
-                File.WriteAllLines(filePath, lines);
-            }
-        }
-
         void Open(string category, CheckedListBox checkedListBox, Dictionary<int, string> array)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
