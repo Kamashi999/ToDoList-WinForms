@@ -71,6 +71,22 @@ namespace ToDoList_WinForms
             }
         }
 
+        void InsertInfoDogs4()
+        {
+            if (Int32.TryParse(textBox3.Text, out int age) && textBox2.Text != null && textBox4.Text != null && textBox5.Text != null && richTextBox1.Text != null)
+            {
+                Dog dog = new Dog(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
+                string newItem = dog.ShowAnimalInfo();
+                checkedListBox1.Items.Add(newItem);
+                originalItems.Add(checkedListBox1.Items.Count - 1, newItem); // Zapisanie oryginalnego tekstu
+                Refresh();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number or fill all text!");
+            }
+        }
+
         //void RefreshItems(string category, CheckedListBox checkedListBox, Dictionary<int, string> originalItems)
         //{
         //    for (int i = 0; i < checkedListBox.Items.Count; i++)
@@ -121,30 +137,30 @@ namespace ToDoList_WinForms
         //    }
         //}
 
-        //void RefreshDogs()
-        //{
-        //    for (int i = 0; i < checkedListBox1.Items.Count; i++)
-        //    {
-        //        if (checkedListBox1.GetItemChecked(i))
-        //        {
-        //            if (!checkedListBox1.Items[i].ToString().Contains("✔️")) // Zapobiega wielokrotnemu dodawaniu
-        //            {
-        //                checkedListBox1.Items[i] = originalItems[i] + " ✔️ " + DateTime.Now;
-        //            }
-        //            else
-        //            {
+        void RefreshDogs()
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                if (checkedListBox1.GetItemChecked(i))
+                {
+                    if (!checkedListBox1.Items[i].ToString().Contains("✔️")) // Zapobiega wielokrotnemu dodawaniu
+                    {
+                        checkedListBox1.Items[i] = originalItems[i] + " ✔️ " + DateTime.Now;
+                    }
+                    else
+                    {
 
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (originalItems.ContainsKey(i))
-        //            {
-        //                checkedListBox1.Items[i] = originalItems[i]; // Przywracanie oryginalnego tekstu
-        //            }
-        //        }
-        //    }
-        //}
+                    }
+                }
+                else
+                {
+                    if (originalItems.ContainsKey(i))
+                    {
+                        checkedListBox1.Items[i] = originalItems[i]; // Przywracanie oryginalnego tekstu
+                    }
+                }
+            }
+        }
 
         void Refresh(string category, CheckedListBox checkedListBox, Dictionary<int, string> array)
         {
@@ -306,43 +322,43 @@ namespace ToDoList_WinForms
             }
         }
 
-        //void SaveDogs()
-        //{
-        //    SaveFileDialog saveFileDialog = new SaveFileDialog
-        //    {
-        //        Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*",
-        //        Title = "Zapisz plik"
-        //    };
+        void SaveDogs()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*",
+                Title = "Zapisz plik"
+            };
 
-        //    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string filePath = saveFileDialog.FileName;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
 
-        //        List<string> lines = new List<string>();
+                List<string> lines = new List<string>();
 
-        //        foreach (var item in checkedListBox1.Items)
-        //        {
-        //            // Sprawdź, czy element jest zaznaczony
-        //            bool isChecked = checkedListBox1.GetItemChecked(checkedListBox1.Items.IndexOf(item));
+                foreach (var item in checkedListBox1.Items)
+                {
+                    // Sprawdź, czy element jest zaznaczony
+                    bool isChecked = checkedListBox1.GetItemChecked(checkedListBox1.Items.IndexOf(item));
 
-        //            // Jeśli element zawiera znak "✔️", pomin go w zapisie
-        //            if (!item.ToString().Contains("✔️"))
-        //            {
-        //                lines.Add($"{item}");  // Zapisz zadanie i jego status
-        //            }
-        //            else
-        //            {
-        //                string tempPath = "C:\\Users\\Sebastian\\Desktop\\Temp\\Temp.txt";
-        //                using (StreamWriter sw = new StreamWriter(tempPath, true))
-        //                {
-        //                    sw.WriteLine(item.ToString());
-        //                }
-        //            }
-        //        }
+                    // Jeśli element zawiera znak "✔️", pomin go w zapisie
+                    if (!item.ToString().Contains("✔️"))
+                    {
+                        lines.Add($"{item}");  // Zapisz zadanie i jego status
+                    }
+                    else
+                    {
+                        string tempPath = "C:\\Users\\Sebastian\\Desktop\\Temp\\Temp.txt";
+                        using (StreamWriter sw = new StreamWriter(tempPath, true))
+                        {
+                            sw.WriteLine(item.ToString());
+                        }
+                    }
+                }
 
-        //        File.WriteAllLines(filePath, lines);
-        //    }
-        //}
+                File.WriteAllLines(filePath, lines);
+            }
+        }
 
         //void OpenCats()
         //{
@@ -541,7 +557,7 @@ namespace ToDoList_WinForms
         {
             if (changeVisitors == true)
             {
-                Save("dogs", checkedListBox2);
+                SaveDogs();
             }
             else
             {
@@ -584,13 +600,13 @@ namespace ToDoList_WinForms
 
         private void Refresh(Object sender, EventArgs e)
         {
-            Refresh("dogs", checkedListBox1, originalItems);
+            RefreshDogs();
             Refresh("cats", checkedListBox2, originalItemsCats);
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Refresh("dogs", checkedListBox1, originalItems);
+            RefreshDogs();
             Refresh("cats", checkedListBox2, originalItemsCats);
         }
     }
