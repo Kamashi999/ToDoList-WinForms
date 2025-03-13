@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace ToDoList_WinForms
 {
@@ -41,30 +42,49 @@ namespace ToDoList_WinForms
             checkedListBox2.Hide();
         }
 
+        void TextClear()
+        {
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
+            richTextBox1.Clear();
+        }
+
         void InsertInfo(string category)
         {
-            if (Int32.TryParse(textBox3.Text, out int age) && textBox2.Text != null && textBox4.Text != null && textBox5.Text != null && richTextBox1.Text != null)
+            if (Regex.IsMatch(textBox2.Text, @"^[a-zA-Z]+$") == true && Regex.IsMatch(textBox4.Text, @"^[a-zA-Z]+$") == true && (Regex.IsMatch(textBox5.Text, @"^[0-9]+$") == true && textBox5.TextLength == 9))
             {
-                if (category == "cat") 
+                if (Int32.TryParse(textBox3.Text, out int age) && age > 0 && age < 15 && textBox2.Text != null && textBox4.Text != null && textBox5.Text != null && richTextBox1.Text != null)
                 {
-                    Cat cat = new Cat(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
-                    string newItemCats = cat.ShowAnimalInfo();
-                    checkedListBox2.Items.Add(newItemCats);
-                    originalItemsCats.Add(checkedListBox2.Items.Count - 1, newItemCats); // Zapisanie oryginalnego tekstu
-                    Refresh();
-                } 
-                else if(category == "dog") 
-                { 
-                Dog dog = new Dog(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
-                string newItem = dog.ShowAnimalInfo();
-                checkedListBox1.Items.Add(newItem);
-                originalItems.Add(checkedListBox1.Items.Count - 1, newItem); // Zapisanie oryginalnego tekstu
-                Refresh();
+                  
+                    if (category == "cat")
+                    {
+                        Cat cat = new Cat(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
+                        string newItemCats = cat.ShowAnimalInfo();
+                        checkedListBox2.Items.Add(newItemCats);
+                        originalItemsCats.Add(checkedListBox2.Items.Count - 1, newItemCats); // Zapisanie oryginalnego tekstu
+                        Refresh();
+                        TextClear();
+                    }
+                    else if (category == "dog")
+                    {
+                        Dog dog = new Dog(textBox2.Text, age, textBox4.Text, textBox5.Text, richTextBox1.Text);
+                        string newItem = dog.ShowAnimalInfo();
+                        checkedListBox1.Items.Add(newItem);
+                        originalItems.Add(checkedListBox1.Items.Count - 1, newItem); // Zapisanie oryginalnego tekstu
+                        Refresh();
+                        TextClear();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid number or fill all text!");
                 }
             }
             else
             {
-                MessageBox.Show("Please enter a valid number or fill all text!");
+                MessageBox.Show("Please enter a valid name!");
             }
         }
 
@@ -102,6 +122,7 @@ namespace ToDoList_WinForms
                 {
                     checkedListBox.Items.RemoveAt(index - 1);
                     array.Remove(index - 1);
+                    textBox1.Clear();
                 }
                 else { MessageBox.Show("Please enter a valid number!"); }
             }
