@@ -134,7 +134,25 @@ namespace ToDoList_WinForms
 
         void Exit()
         {
-            Application.Exit();
+            DialogResult dr = MessageBox.Show("Have you saved your files?", "Warning!", MessageBoxButtons.YesNo);
+            switch (dr)
+            {
+                case DialogResult.Yes:
+                    Application.Exit();
+                    break;
+                case DialogResult.No:
+                    if (changeVisitors == true)
+                    {
+                        Save("dogs", checkedListBox1);
+                        if (checkedListBox2 != null) { Save("cats", checkedListBox2); }
+                    }
+                    else
+                    {
+                        Save("cats", checkedListBox2);
+                        if (checkedListBox2 != null) { Save("dogs", checkedListBox1); }
+                    }
+                    break;
+            }
         }
         void Save(string category, CheckedListBox checklistbox)
         {
@@ -346,18 +364,7 @@ namespace ToDoList_WinForms
 
         private void Exit_btn(object sender, EventArgs e)
         {
-            if (changeVisitors == true)
-            {
-                MessageBox.Show("Have you saved files?");
-                Save("dogs", checkedListBox1);
-                Exit();
-            }
-            else
-            {
-                MessageBox.Show("Have you saved files?");
-                Save("cats", checkedListBox2);
-                Exit();
-            }
+            Exit();
         }
 
         private void ChangeTheme_btn(object sender, EventArgs e)
